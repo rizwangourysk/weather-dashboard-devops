@@ -83,7 +83,9 @@ jobs:
             --name ${{ env.EKS_CLUSTER }}
 
       - name: Create Namespace
-        run: kubectl apply -f k8s/namespace.yaml
+        run: |
+           kubectl create namespace staging \
+               --dry-run=client -o yaml | kubectl apply -f -
 
       - name: Create DockerHub Pull Secret
         run: |
