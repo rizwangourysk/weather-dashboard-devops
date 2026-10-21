@@ -87,14 +87,9 @@ jobs:
            kubectl create namespace staging \
                --dry-run=client -o yaml | kubectl apply -f -
 
-      - name: Create DockerHub Pull Secret
+      - name: Skip DockerHub Pull Secret
         run: |
-          kubectl create secret docker-registry dockerhub-registry-secret \
-            --docker-server=https://index.docker.io/v1/ \
-            --docker-username=${{ secrets.DOCKERHUB_USERNAME }} \
-            --docker-password=${{ secrets.DOCKERHUB_TOKEN }} \
-            --namespace=${{ env.K8S_NAMESPACE }} \
-            --dry-run=client -o yaml | kubectl apply -f -
+           echo "DockerHub images are public, skipping pull secret creation"
 
       - name: Create Weather API Secret
         run: |
